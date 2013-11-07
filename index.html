@@ -1,0 +1,288 @@
+<html>
+	<head>
+		<title>SpaceInvader3D</title>
+		<style>
+        body {
+            padding: 0;
+            margin: 0;
+            
+            background: #333
+        }
+        canvas {
+            width: 100%;
+            height: 100%
+        }
+        </style>
+        
+		<!--<script src="https://rawgithub.com/mrdoob/three.js/master/build/three.js"></script>-->
+		<script src="src/three.min.js"></script>
+        
+		<script src="src/variables.js"></script>
+		<script src="src/teclado.js"></script>
+	</head>
+	<body>
+		<script>
+             ////////////////////////////////////////
+            //*** ESCENA; CAMARA Y RENDERIZADO ***//
+    		/**/	var scene = new THREE.Scene();
+    		/**/	var camera = new THREE.PerspectiveCamera(75, window.innerWidth/window.innerHeight, 0.1, 1000);
+            /**/
+    		/**/	var renderer = new THREE.WebGLRenderer();
+    		/**/	renderer.setSize(window.innerWidth, window.innerHeight);
+    		/**/	document.body.appendChild(renderer.domElement);
+            //*** FINAL ESCENA; CAMARA Y RENDERIZADO ***//
+            /////////////////////////////////////////////
+
+             /////////////////
+            //*** SUELO ***//
+    		/**/	var geometrySuelo = new THREE.CubeGeometry(100,0,100,100, 0, 100);
+    		/**/	var materialSuelo = new THREE.MeshBasicMaterial({color: 0x00ffff, wireframe: true});
+    		/**/	var suelo = new THREE.Mesh(geometrySuelo, materialSuelo);
+    		/**/	scene.add(suelo);
+            //*** FINAL SUELO ***//
+            //////////////////////
+            
+            
+            /*
+            texture = THREE.ImageUtils.loadTexture('img/cara.png');
+            material = new THREE.MeshBasicMaterial({map: texture});
+            */
+    
+             ////////////////////////
+            //*** NAVE JUGADOR ***//
+            /**/    var navePos = Array();
+    		/**/	var geometryNave = new THREE.CubeGeometry(1,1,1);
+    		/**/	var materialNave = new THREE.MeshNormalMaterial();
+            /**/    for(i=0;i<nave.length;i++){
+            /**/        for(e=0;e<nave[i].length;e++){
+            /**/            if(nave[i][e]==1){
+            /**/            navePos[navePos.length] = new THREE.Mesh(geometryNave, materialNave);
+            /**/            
+            /**/            navePos[navePos.length-1].position.x = e-1.5;
+            /**/            navePos[navePos.length-1].position.y = 0.5;
+            /**/            navePos[navePos.length-1].position.z = i+44.5;
+            /**/            
+            /**/            scene.add(navePos[navePos.length-1]);
+            /**/            }
+            /**/        }
+            /**/    }
+            //*** FINAL NAVE JUGADOR ***//
+            /////////////////////////////
+    
+             ///////////////////
+            //*** BUNQUER ***//
+            /**/    var bunquerPos = Array();
+    		/**/	var geometryBunquer = new THREE.CubeGeometry(1,2,1);
+    		/**/	var materialBunquer = new THREE.MeshNormalMaterial();
+            /**/
+            /**/    for(a=0;a<4;a++){
+            /**/        for(i=0;i<bunquer.length;i++){
+            /**/            for(e=0;e<bunquer[i].length;e++){
+            /**/                if(bunquer[i][e]==1){
+            /**/                bunquerPos[bunquerPos.length] = new THREE.Mesh(geometryBunquer, materialBunquer);
+            /**/            
+            /**/                bunquerPos[bunquerPos.length-1].position.x = e-41.5+(a*25);
+            /**/                bunquerPos[bunquerPos.length-1].position.y = 1;
+            /**/                bunquerPos[bunquerPos.length-1].position.z = i+37.5;
+            /**/            
+            /**/                scene.add(bunquerPos[bunquerPos.length-1]);
+            /**/                }
+            /**/            }
+            /**/        }
+            /**/    }
+            //*** FINAL BUNQUER ***//
+            ////////////////////////
+            
+             ////////////////////
+            //*** DISPAROS ***//
+            /**/    var disparosPos = Array();
+    		/**/	var geometryDisparos = new THREE.CubeGeometry(1,0.01,1);
+    		/**/	var materialDisparos = new THREE.MeshBasicMaterial({color: 0xEC4470});
+            /**/    for(i=0;i<3;i++){
+            /**/        disparosPos[disparosPos.length] = new THREE.Mesh(geometryDisparos, materialDisparos);
+            /**/        
+            /**/        disparosPos[disparosPos.length-1].position.x = 49.5;
+            /**/        disparosPos[disparosPos.length-1].position.y = 0;
+            /**/        disparosPos[disparosPos.length-1].position.z = 49.5;
+            /**/        
+            /**/        scene.add(disparosPos[disparosPos.length-1]);
+            /**/    }
+            //*** FINAL DISPAROS ***//
+            /////////////////////////
+            
+             ////////////////////
+            //*** ENEMIGOS ***//
+            /**/    var enemigosPos = Array();
+    		/**/	var geometryEnemigos = new THREE.CubeGeometry(1,1,1);
+    		/**/	var materialEnemigos = new THREE.MeshNormalMaterial();
+            /**/
+            /**/    for(a=0;a<12;a++){
+            /**/        for(u=0;u<5;u++){
+            /**/            for(i=0;i<enemigos.length;i++){
+            /**/                for(e=0;e<enemigos[i].length;e++){
+            /**/                    if(enemigos[i][e]==1){
+            /**/                    enemigosPos[enemigosPos.length] = new THREE.Mesh(geometryEnemigos, materialEnemigos);
+            /**/            
+            /**/                    enemigosPos[enemigosPos.length-1].position.x = e-47.5+(a*8);
+            /**/                    enemigosPos[enemigosPos.length-1].position.y = 0.5;
+            /**/                    enemigosPos[enemigosPos.length-1].position.z = 0.5+i+(u*5);
+            /**/            
+            /**/                    scene.add(enemigosPos[enemigosPos.length-1]);
+            /**/                    }
+            /**/                }
+            /**/            }
+            /**/        }
+            /**/    }
+            //*** FINAL ENEMIGOS ***//
+            /////////////////////////
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+             ///////////////////////////
+            //*** POSICION CAMARA ***//
+            /**/    camera.position.z = 45;
+            /**/    camera.position.y = 30;
+            /**/    camera.rotation.set( -1.0, 0, 0);
+            //*** FINAL POSICION CAMARA ***//
+            ////////////////////////////////
+            
+            
+             ///////////////////////
+            //*** RENDERIZADO ***//
+            /**/    var cont = 0;
+                    var moveE = 0;
+            /**/    var render = function () {
+            /**/        cont++;
+            /**/        requestAnimationFrame(render);
+            /**/
+            /**/        if(DERECHA && navePosX < 47.5){
+            /**/            if(cont%3==0){
+            /**/                navePosX++;
+            /**/        
+            /**/                for(i=0;i<navePos.length;i++){
+            /**/                    navePos[i].position.x++;
+            /**/                }
+            /**/                camera.position.x++;
+            /**/            }
+            /**/        }
+            /**/        if(IZQUIERDA && navePosX > -46.5){
+            /**/            if(cont%3==0){
+            /**/                navePosX--;
+            /**/        
+            /**/                for(i=0;i<navePos.length;i++){
+            /**/                    navePos[i].position.x--;
+            /**/                }
+            /**/                camera.position.x--;
+            /**/            }
+            /**/        }
+            
+                        if(cont%20==0){
+                            if(moveE == 0){
+                                entran = 0;
+                                for(i=0;i<enemigosPos.length;i++){
+                                    if(enemigosPos[i].position.x+1 > 46.5) entran = 1;
+                                }
+                                if(entran == 1) moveE = 1;
+                                else{
+                                    for(i=0;i<enemigosPos.length;i++){
+                                        enemigosPos[i].position.x++;
+                                    }   
+                                }
+                            }
+                            else{
+                                entran = 0;
+                                for(i=0;i<enemigosPos.length;i++){
+                                    if(enemigosPos[i].position.x-1 < -47.5) entran = 1;
+                                }
+                                if(entran == 1) moveE = 0;
+                                else{
+                                    for(i=0;i<enemigosPos.length;i++){
+                                        enemigosPos[i].position.x--;
+                                    }   
+                                }
+                            }
+                        }
+                        if(cont%350==0){
+                            for(i=0;i<enemigosPos.length;i++){
+                                enemigosPos[i].position.z++;
+                            }
+                        }
+            
+            
+            /**/    
+            /**/        if(ESPACIO && disparos < 3){
+            /**/            for(i=0;i<3;i++){
+            /**/                if(disparosA[i] == 0){
+            /**/                    disparosPos[i].position.x = navePos[0].position.x;
+            /**/                    disparosPos[i].position.z = 43.5;
+            /**/                
+            /**/                    disparosA[i] = 1;
+            /**/                
+            /**/                    break;
+            /**/                }
+            /**/            }
+            /**/        
+            /**/            disparos++;
+            /**/            ESPACIO = false;
+            /**/        }
+            /**/    
+            /**/    
+            /**/        for(i=0;i<3;i++){
+            /**/            if(disparosA[i] == 1) disparosPos[i].position.z-=0.5;
+            /**/        }
+            /**/    
+            /**/        for(i=0;i<3;i++){
+            /**/            if(disparosPos[i].position.z <= -49.5){
+            /**/                disparosA[i] = 0;
+            /**/                disparosPos[i].position.z = 49.5;
+            /**/                disparosPos[i].position.x = 49.5;
+            /**/                disparos--;
+            /**/            }
+            /**/        }
+            /**/    
+            /**/        for(i=0;i<3;i++){
+            /**/            if(disparosA[i] == 1){
+            /**/                dispX = disparosPos[i].position.x;
+            /**/                dispZ = disparosPos[i].position.z;
+            /**/                
+            /**/                for(e=0;e<bunquerPos.length;e++){
+            /**/                    bunqX = bunquerPos[e].position.x;
+            /**/                    bunqZ = bunquerPos[e].position.z;
+            /**/                    
+            /**/                    if(dispX == bunqX && dispZ == bunqZ){
+            /**/                        bunquerPos[e].position.x = 49.5;
+            /**/                        bunquerPos[e].position.z = 49.5;
+            /**/                        
+            /**/                        disparosA[i] = 0;
+            /**/                        disparosPos[i].position.z = 49.5;
+            /**/                        disparosPos[i].position.x = 49.5;
+            /**/                        disparos--;
+            /**/                    }
+            /**/                }
+            /**/            }
+            /**/        }
+            /**/    
+			/**/	    renderer.render(scene, camera);
+            /**/    };
+            /**/
+			/**/    render();
+            //*** FINAL RENDERIZADO ***//
+            ////////////////////////////
+		</script>
+	</body>
+</html>
